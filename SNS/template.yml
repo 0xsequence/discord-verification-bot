@@ -1,0 +1,59 @@
+Parameters:
+  Environment:
+    Type: String
+Resources:
+  SNSTopic:
+    Type: "AWS::SNS::Topic"
+    Properties:
+      DisplayName: "Wallet Verified"
+      TopicName: "wallet_verified"
+
+  SNSTopicPolicy:
+    Type: "AWS::SNS::TopicPolicy"
+    Properties:
+      PolicyDocument:
+        Version: "2008-10-17"
+        Id: "wallet_verified_policy"
+        Statement:
+          - Sid: "__default_statement_ID"
+            Effect: "Allow"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action:
+              - "SNS:Publish"
+              - "SNS:RemovePermission"
+              - "SNS:SetTopicAttributes"
+              - "SNS:DeleteTopic"
+              - "SNS:ListSubscriptionsByTopic"
+              - "SNS:GetTopicAttributes"
+              - "SNS:AddPermission"
+              - "SNS:Subscribe"
+            Resource: !Sub "${SNSTopic}"
+          - Sid: "__console_pub_0"
+            Effect: "Allow"
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action: "SNS:Publish"
+            Resource: !Sub "${SNSTopic}"
+          - Sid: "__console_sub_0"
+            Effect: "Allow"
+            Principal:
+              AWS: "*"
+            Action: "SNS:Subscribe"
+            Resource: !Sub "${SNSTopic}"
+      Topics:
+        - !Ref SNSTopic
+
+  PostVerificationLambdaSubscription:
+    Type: "AWS::SNS::Subscription"
+    Properties:
+      TopicArn: !Ref SNSTopic
+      Endpoint: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:post-verification-lambda"
+      Protocol: "lambda"
+      Region: !Ref AWS::Region
+      RedrivePolicy: !Sub '{"deadLetterTargetArn":"arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:${SNSTopic.TopicName}_DLQ"}'
+
+Outputs:
+  TopicArn:
+    Description: TopicArn
+    Value: !Ref SNSTopic

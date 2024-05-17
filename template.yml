@@ -1,0 +1,122 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  0xsequence-wallet-verification-bot
+  Handles discord bot infra.
+
+Parameters:
+  Environment:
+    Type: String
+  BlockChainServiceAccountId:
+    Type: String
+  SubnetA:
+    Type: String
+    Default: subnet-0010101011010e
+  SubnetB:
+    Type: String
+    Default: subnet-0010101011010e
+  NFT_MARKETPLACE:
+    Type: String
+    Default: "https://my-marketplace.gg"
+  SUPPORT_EMAIL:
+    Type: String
+    Default: "support@my-domain.gg"
+  CommitSha:
+    Type: String
+  VpcId:
+    Type: String
+
+Resources:
+  IncomingEventBridge:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: EventBridge/incoming-eventbridge.yaml
+      Parameters:
+        BlockChainServiceAccountId: !Ref BlockChainServiceAccountId
+
+  NftHandlingLambda:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: nft_handling_lambda/template.yaml
+      Parameters:
+        Environment: !Ref Environment
+        FT_MARKETPLACE: !Ref NFT_MARKETPLACE
+        SUPPORT_EMAIL: !Ref SUPPORT_EMAIL
+
+  PostVerificationLambda:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: post_verification_lambda/template.yaml
+      Parameters:
+        Environment: !Ref Environment
+        SNSTopicArn: !GetAtt WalletVerifiedSNSTopic.Outputs.TopicArn
+        NFT_MARKETPLACE: !Ref NFT_MARKETPLACE
+        SUPPORT_EMAIL: !Ref SUPPORT_EMAIL
+
+  DiscordBotStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: wallet_verify_bot/ecs-bot.yml
+      Parameters:
+        SubnetA: !Ref SubnetA
+        SubnetB: !Ref SubnetB
+        Environment: !Ref Environment
+        CommitSha: !Ref CommitSha
+        VpcId: !Ref VpcId
+
+  WalletVerifiedSNSTopic:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: SNS/template.yml
+      Parameters:
+        Environment: !Ref Environment
+
+  DynamoDBTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "UserId"
+          AttributeType: "S"
+        - AttributeName: "WalletAddress"
+          AttributeType: "S"
+      TableName: "verified_wallets"
+      KeySchema:
+        - AttributeName: "WalletAddress"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      GlobalSecondaryIndexes:
+        - IndexName: "UserId-index"
+          KeySchema:
+            - AttributeName: "UserId"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: "ALL"
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+
+  BotImgBucket:
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: Delete
+    Properties:
+      BucketName: !Sub "${Environment}-my-img-bucket"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  S3BucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Ref BotImgBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: "PublicRead"
+            Effect: "Allow"
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${BotImgBucket}/*"

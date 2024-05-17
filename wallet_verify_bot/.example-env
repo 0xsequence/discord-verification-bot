@@ -1,0 +1,47 @@
+BOT_TOKEN=AaSsdfgHH.Jkl1_A.2aSdFGhjKLQ
+GUILD_ID=123456789
+WALLET_VERIFIED_ROLE_ID=787878787878
+APP_CLIENT_ID=12345678
+REGION=eu-central-2
+NODE_ENV=dev-local | leave_empty_for_deployment!
+DB_TABLE_NAME= verified_wallets
+LOG_LEVEL=debug | info
+BLUE_COLOR=0x00b0f4
+RED_COLOR=0xff0000
+GREEN_COLOR=0x00ff00
+YELLOW_COLOR=0xffaa00
+SUPPORT_EMAIL="support@mydomain.com"
+
+APP_CLIENT_ID=1111111111
+ACCESS_KEY=hola
+SECRET_ACCESS_KEY=hola
+VERIFICATION_CHANNEL_ID=222222222
+JWT_SECRET=whatever_we_like_that_matches_front_end_JWT_SECRET
+ISSUER=App_or_Server_Name
+NFT_MARKETPLACE="https://my-nft-marketplace.gg"
+VERIFICATION_PAGE_URL=http://localhost:3000/
+
+PUBLIC_EMBED_BTN_LABEL="Get started!",
+PUBLIC_EMBED_TITLE="Wallet Management & NFT Ownership Verification",
+PUBLIC_EMBED_DESCRIPTION="'Are you a new NFT holder or do you need to manage your linked wallet? You can link your wallet to Discord to verify ownership of an NFT and get your exclusive role and all the unique perks attached to it!",
+PUBLIC_EMBED_FIELD_NAME=IMPORTANT,
+PUBLIC_EMBED_FIELD_VALUE="Never share your wallet details with anyone but this bot. Our staff will never ask for your details here or via DM.\nFor any support questions, always use {SUPPORT_EMAIL}\n\n",
+PUBLIC_EMBED_IMAGE_URL=https://my-domain/Splashart.png
+
+WALLET_MANAGEMENT_TITLE: "Wallet Management"
+WALLET_MANAGEMENT_DESCRIPTION: "Your Discord is already linked to a wallet./nYou can only have one wallet linked to your Discord account at a time."
+WALLET_MANAGEMENT_FIELD_NAME: "IMPORTANT"
+WALLET_MANAGEMENT_FIELD_VALUE: "At the moment is not possible to change the wallet linked to this Discord account. If you need assistance, please contact {SUPPORT_EMAIL} and we'll try to help./n"
+
+VERIFICATION_TITLE: "Let's Verify your Wallet"
+VERIFICATION_DESCRIPTION: "Unlock your full potential!.\n\nClicking on the button below will take you to {VERIFICATION_PAGE_URL} where you can login with your wallet and link it with Discord."
+VERIFICATION_FIELD_NAME: "IMPORTANT"
+VERIFICATION_FIELD_VALUE: "To properly verify ownership, use the same login you used when purchasing your NFT!"
+
+WALLET_FOUND_DESCRIPTION="Your Discord is linked to the following account:"
+WALLET_FOUND_FIELD_NAME="WARNING"
+WALLET_FOUND_FIELD_VALUE="Never share your wallet details with anyone in Discord but this bot. Our staff will never ask for your details here or via DM.\nFor any support questions, always use our support email"
+WALLET_NOT_FOUND_DESCRIPTION="We were unable to find any wallet linked with this Discord account."
+WALLET_NOT_FOUND_FIELD_NAME="TROUBLESHOOTING"
+WALLET_NOT_FOUND_FIELD_VALUE="Make sure you are logged in to Discord with the right user/account.\n\nHead to the verification channel and click the Get Started button to start linking your wallet and verify ownership of an NFT.\n\nIf you require assistance, please contact us at {SUPPORT_EMAIL} and we'll try to help."
+BUCKET_NAME= test

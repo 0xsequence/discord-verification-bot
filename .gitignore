@@ -1,0 +1,83 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules/
+/.pnp
+pnp
+.pnp.js
+
+# TODO: remove after refactor
+.github
+docs
+dist
+amplify
+overview*
+README*
+.run/*
+deploy*
+*/pnpm*
+
+#end TODO
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+*/.next/
+*.tsbuildinfo
+next-env.d.ts
+*/.next/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+*.db
+
+# debug
+npm-debug.log*
+
+# env files
+.env*.local
+*.env
+
+# vercel
+*.vercel
+
+# user
+*/.idea/
+.idea/
+
+
+#aws
+**/.aws-sam/*
+**/.aws-sam
+
+# Serverless directories
+.serverless/
+
+# DynamoDB Local files
+.dynamodb/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+**/.vscode/*
+
+# Development
+local_env_vars.json
+**/events/
+wallet_verify_front_end/amplify/team-provider-info.json
+wallet_verify_front_end/amplify/#current-cloud-backend/amplify-meta.json
+wallet_verify_front_end/amplify/backend/amplify-meta.json
+run_local_action.sh
+.venv
+# Use this for manually updating parameters don't want it accidentally commited
+parameters_*.json 

@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  incoming-eventbridge
+
+Parameters:
+  BlockChainServiceAccountId:
+    Type: String
+
+Outputs:
+  EventBusName:
+    Value: !GetAtt IncomingEventBus.Name
+
+Resources:
+  IncomingEventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      Name: incoming
+
+  ReceiveFromBlockChainServicePolicy:
+    Type: AWS::Events::EventBusPolicy
+    Properties:
+      EventBusName: !Ref IncomingEventBus
+      StatementId: ReceiveFromBlockChainService
+      Statement:
+        Effect: Allow
+        Principal:
+          AWS: !Sub "arn:aws:iam::${BlockChainServiceAccountId}:root"
+        Action: "events:PutEvents"
+        Resource: !GetAtt IncomingEventBus.Arn

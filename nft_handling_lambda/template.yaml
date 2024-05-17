@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nft_handling_lambda
+
+Parameters:
+  Environment:
+    Type: String
+  NFT_MARKETPLACE:
+    Type: String
+  SUPPORT_EMAIL:
+    Type: String
+  NFT_ROLES:
+    Type: String
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+# Resources declares the AWS resources that you want to include in the stack
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
+Resources:
+  NftHandlingLambda:
+    Type: AWS::Serverless::Function
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/index.ts
+    Properties:
+      CodeUri: ./
+      Handler: src/index.handler
+      FunctionName: nft-handling-lambda
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Timeout: 30
+      MemorySize: 256
+      Events:
+        EBRule:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: incoming
+            Pattern:
+              source:
+                - 0xsequence.blockchain
+              detail-type:
+                - NftMinted
+                - NftTransferred
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonSSMReadOnlyAccess
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:*
+              Resource: 'arn:aws:dynamodb:*:*:table/verified_wallets'
+      Environment:
+        Variables:
+          BOT_TOKEN: "{{resolve:ssm:bot_token}}"
+          GUILD_ID: "{{resolve:ssm:guild_id}}"
+          WEBHOOK_ID: "{{resolve:ssm:webhook_id}}"
+          WEBHOOK_TOKEN: "{{resolve:ssm:webhook_token}}"
+          WALLET_VERIFIED_ROLE_ID: '{{resolve:ssm:wallet_verified_role_id}}'
+          REGION: !Ref AWS::Region
+          DB_TABLE_NAME: verified_wallets
+          NFT_MARKETPLACE: !Ref NFT_MARKETPLACE
+          SUPPORT_EMAIL: !Ref SUPPORT_EMAIL
+          NFT_ROLES: !Ref NFT_ROLES # TODO: RESOLVE FROM SSM
+          # Leave these empty - Need to exist here or will be undefined on local invoke
+          NODE_ENV: ""
+          LOG_LEVEL: ""

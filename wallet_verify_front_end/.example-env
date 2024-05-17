@@ -1,0 +1,16 @@
+JWT_SECRET=asdfghjk
+WALLET_VERIFIED_TOPIC_ARN=arn:aws:sns:{my-region}1:1234567:wallet_verified
+REGION=aws-region
+ACCESS_KEY=12345678
+SECRET_ACCESS_KEY=123asDFhjk456x
+NETWORK: mumbai(test)|mainnet(release)
+NEXT_PUBLIC_BUCKET_NAME: my-prod-bucket | my-dev-bucket
+NEXT_PUBLIC_INDEX_TITLE: 'DiscordServer - Wallet Verification'
+NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_APP_NAME: 'Discord Server's Wallet Verification
+NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_THEME: See https://docs.sequence.xyz/sdk/sequence-kit/configuration/#defaulttheme
+NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_BANNER_URL: https://wherever_you_host_images/My_Splashart.png
+NEXT_PUBLIC_CONNECT_WALLET_MAIN_MESSAGE: 'Please log into the wallet that contains your NFT to verify ownership and get the associated perks on Discord'
+NEXT_PUBLIC_DONE_ICON_URL: https://wherever_you_host_images/Ico_Done.svg
+NEXT_PUBLIC_WARN_ICON_URL: https://wherever_you_host_images/Ico_Warn.svg
+NEXT_PUBLIC_LOGO_URL: https://wherever_you_host_images/MyLogo.png
+NEXT_PUBLIC_BACKGROUND_IMAGE_URL: https://wherever_you_host_images/MyBackgroud.png
