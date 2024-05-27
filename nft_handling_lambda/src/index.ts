@@ -169,7 +169,7 @@ function getPreviousHolderEmbed(): EmbedBuilder {
                 inline: false,
             },
         )
-        .setColor(colors.Yellow)
+        .setColor(colors.Warning)
         .setTimestamp();
 }
 
@@ -189,6 +189,6 @@ function getNewHolderEmbed(): EmbedBuilder {
                 inline: false,
             },
         )
-        .setColor(colors.Blue)
+        .setColor(colors.Success)
         .setTimestamp();
 }

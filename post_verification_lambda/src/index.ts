@@ -1,15 +1,14 @@
-import {SNSEvent, SNSHandler} from 'aws-lambda';
-import {EmbedBuilder} from 'discord.js';
+import { SNSEvent, SNSHandler } from 'aws-lambda';
+import { EmbedBuilder } from 'discord.js';
+import { botConfig } from './types/bot_config';
+import { colors } from './types/color';
+import { globalLogger as logger } from './types/global_logger';
 
-import {colors} from './types/color';
-import {botConfig} from './types/bot_config';
-import {globalLogger as logger} from './types/global_logger';
+import { setupDiscordService } from './setup/setup_discord_service';
+import { setupWalletService } from './setup/setup-wallet-service';
 
-import {setupDiscordService} from './setup/setup_discord_service';
-import {setupWalletService} from './setup/setup-wallet-service';
-
-import {Wallet, WalletService, WalletVerification} from '@0xsequence/wallet-utils';
-import {DiscordService} from '@0xsequence/discord-utils';
+import { WalletService, WalletVerification } from '@0xsequence/wallet-utils';
+import { DiscordService } from '@0xsequence/discord-utils';
 
 const discordService: DiscordService = setupDiscordService();
 const walletService: WalletService = setupWalletService();
@@ -25,29 +24,29 @@ export const handler: SNSHandler = async (event: SNSEvent): Promise<void> => {
         logger.debug('walletVerifiedMessage: ', walletVerifiedMessage);
         const userAlreadyVerified = await isRepeatedVerificationAttempt(walletVerifiedMessage);
 
+        const userId = walletVerifiedMessage.UserId;
+        const threadId = walletVerifiedMessage.ThreadId;
+
         if (userAlreadyVerified) {
-            logger.warn(`Ignoring repeated attempt to verify by Discord user ${walletVerifiedMessage.UserId}`);
+            logger.warn(`Ignoring repeated attempt to verify by Discord user ${userId}`);
             return;
         }
 
         const wallet = await walletService.saveDiscordWalletVerification(walletVerifiedMessage);
-        logger.debug(wallet);
 
-        if (wallet) {
-            await discordService.assignAccountVerifiedRole(walletVerifiedMessage.UserId);
+        if (wallet != null) {
+            await discordService.assignAccountVerifiedRole(userId, botConfig.WALLET_VERIFIED_ROLE_ID);
 
-            const isNFTHolder = checkWalletHasNfts(wallet);
+            const ownedNftSeries = walletService.getUniqueWalletNftsSeries(wallet.Nfts);
+            const isNFTHolder = ownedNftSeries != null && ownedNftSeries.length > 0;
 
             if (isNFTHolder) {
-                await discordService.updateRole(walletVerifiedMessage.UserId, ''); // TODO: fix, see nft-handling-lambda
+                await discordService.updateNftHolderRoles(userId, ownedNftSeries);
 
-                const embed = getSuccessNftOwnerEmbed(''); // TODO: fix
-                await discordService.notifyUserInDiscord(wallet.UserId ?? '', wallet.ThreadId ?? '', embed); // TODO: fix
+                const embed = getNftOwnerEmbed();
+                await discordService.notifyUserInDiscord(userId, threadId, embed);
             } else {
-                const embed = getSuccessEmbed();
-                const userId = walletVerifiedMessage.UserId;
-                const threadId = walletVerifiedMessage.ThreadId;
-
+                const embed = getNonNftOwnerEmbed();
                 await discordService.notifyUserInDiscord(userId, threadId, embed);
             }
         }
@@ -83,63 +82,46 @@ async function isRepeatedVerificationAttempt(walletVerifiedMessage: WalletVerifi
 
 function getAccountAlreadyConnectedEmbed() {
     return new EmbedBuilder()
-        .setTitle(botConfig.ACCOUNT_ALREADY_LINKED_TITLE ?? 'Failed to link Account!')
-        .setDescription(
-            botConfig.ACCOUNT_ALREADY_LINKED_DESCRIPTION ?? `There is already an account linked with this Discord.\n`,
-        )
+        .setTitle('Failed to link Account!')
+        .setDescription(`There is already a wallet linked with this Discord account.\n\n`)
         .addFields({
             name: `IMPORTANT`,
             value: `At the moment is not possible to change the account linked to this Discord. If you need assistance, please contact us at ${botConfig.SUPPORT_EMAIL} and we'll try to help.\n`,
         })
-        .setColor(colors.Red)
+        .setColor(colors.Error)
         .setTimestamp();
 }
 
-function checkWalletHasNfts(wallet: Wallet | undefined) {
-    const isNFTHolder = wallet?.Nfts !== undefined && wallet.Nfts.length > 0;
+const title = 'Account Linked Successfully!';
+const description = 'Your wallet is now linked to your Discord account.\n\n';
 
-    logger.debug(`isNFTHolder: ${isNFTHolder}`);
-
-    return isNFTHolder;
-}
-
-function getSuccessNftOwnerEmbed(nftHolderHighestNftTier: string) {
-    const roleName = getRoleNameForNftTier(nftHolderHighestNftTier);
-
+function getNftOwnerEmbed() {
     return new EmbedBuilder()
-        .setTitle(botConfig.ACCOUNT_LINKED_SUCCESS_TITLE ?? 'Account Linked Successfully!')
-        .setDescription(botConfig.ACCOUNT_LINKED_SUCCESS_DESCRIPTION ?? 'Your account is now linked to your Discord.\n')
+        .setTitle(title)
+        .setDescription(description)
         .addFields({
-            name: botConfig.ACCOUNT_LINKED_SUCCESS_OWNER_FIELD_NAME ?? `NFT Ownership Verified`,
-            value: `We found an ${nftHolderHighestNftTier} and we have assigned you the corresponding ${roleName} role.`,
+            name: `NFT Ownership Verified`,
+            //TODO: might need to change based on decision about NFT metadata
+            value: `You are an NFT holder and we have assigned you the corresponding roles based on your NFT's series.`,
             inline: true,
         })
-        .setColor(colors.Green)
+        .setColor(colors.Success)
         .setTimestamp();
 }
 
-// TODO: change by nft/role mapping (NFT_ROLES)
-function getRoleNameForNftTier(nftHolderHighestNftTier: string) {
-    return 'Dummy'
-}
-
-function getSuccessEmbed() {
+function getNonNftOwnerEmbed() {
     return new EmbedBuilder()
-        .setTitle(botConfig.ACCOUNT_LINKED_SUCCESS_TITLE ?? 'Account Linked Successfully!')
-        .setDescription(botConfig.ACCOUNT_LINKED_SUCCESS_DESCRIPTION ?? 'Your account is now linked to your Discord.\n')
+        .setTitle(title)
+        .setDescription(description)
         .addFields(
             {
                 name: 'Unable to verify NFT Ownership',
-                value:
-                    botConfig.ACCOUNT_LINKED_SUCCESS_NON_OWNER_FIELD1_VALUE ??
-                    `You don't seem to own an NFT yet. If you wish to obtain one, head over to ${botConfig.NFT_MARKETPLACE} `,
+                value: `You don't seem to own an NFT yet. If you wish to obtain one, head over to ${botConfig.NFT_MARKETPLACE} `,
                 inline: true,
             },
             {
                 name: '\u200B',
-                value:
-                    botConfig.ACCOUNT_LINKED_SUCCESS_NON_OWNER_FIELD2_VALUE ??
-                    `When you get an NFT we will automatically assign you the appropriate role. \n`,
+                value: `When you get an NFT we will automatically assign you the appropriate role.\n`,
                 inline: false,
             },
             {
@@ -148,6 +130,6 @@ function getSuccessEmbed() {
                 inline: false,
             },
         )
-        .setColor(colors.Yellow)
+        .setColor(colors.Warning)
         .setTimestamp();
 }
