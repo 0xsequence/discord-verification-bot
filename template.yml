@@ -15,12 +15,6 @@ Parameters:
   SubnetB:
     Type: String
     Default: subnet-0010101011010e
-  NFT_MARKETPLACE:
-    Type: String
-    Default: "https://my-marketplace.gg"
-  SUPPORT_EMAIL:
-    Type: String
-    Default: "support@my-domain.gg"
   CommitSha:
     Type: String
   VpcId:
@@ -40,8 +34,6 @@ Resources:
       Location: nft_handling_lambda/template.yaml
       Parameters:
         Environment: !Ref Environment
-        FT_MARKETPLACE: !Ref NFT_MARKETPLACE
-        SUPPORT_EMAIL: !Ref SUPPORT_EMAIL
 
   PostVerificationLambda:
     Type: AWS::Serverless::Application
@@ -50,8 +42,6 @@ Resources:
       Parameters:
         Environment: !Ref Environment
         SNSTopicArn: !GetAtt WalletVerifiedSNSTopic.Outputs.TopicArn
-        NFT_MARKETPLACE: !Ref NFT_MARKETPLACE
-        SUPPORT_EMAIL: !Ref SUPPORT_EMAIL
 
   DiscordBotStack:
     Type: AWS::CloudFormation::Stack

@@ -6,29 +6,17 @@
         "WEBHOOK_TOKEN": "asdfg123-_asdfg123-asd-fghj",
         "WALLET_VERIFIED_ROLE_ID": 55555555555555555555,
         "NFT_ROLES": " {\"NftRoles\":[{\"RoleId\":\"55555555555\",\"RoleName\":\"My Role Name 1\",\"NftSeries\":\"Test1\"},{\"RoleId\":\"6666666666666\",\"RoleName\":\"My Role Name 2\",\"NftSeries\":\"Test2\"}]}",
+
         "REGION": "eu-central-1",
         "NODE_ENV": "dev-local",
         "DB_TABLE_NAME": "verified_wallets",
         "LOG_LEVEL": "debug",
+
         "BLUE_COLOR": "0x00b0f4",
         "RED_COLOR": "0xff0000",
         "GREEN_COLOR": "0x00ff00",
         "YELLOW_COLOR": "0xffaa00",
-        "ACCOUNT_ALREADY_LINKED_TITLE": "Failed to Link your Wallet",
-        "ACCOUNT_ALREADY_LINKED_DESCRIPTION": "There is already an wallet linked to your Discord account.",
-        "ACCOUNT_LINKED_SUCCESS_TITLE": "Wallet Linked Successfully",
-        "ACCOUNT_LINKED_SUCCESS_DESCRIPTION": "Your wallet is now linked to your Discord account.",
-        "ACCOUNT_LINKED_SUCCESS_OWNER_FIELD_NAME": "NFT Ownership Verified",
-        "ACCOUNT_LINKED_SUCCESS_NON_OWNER_FIELD1_VALUE": "You don't seem to own an NFT yet. If you wish to obtain one, head over to",
-        "ACCOUNT_LINKED_SUCCESS_NON_OWNER_FIELD2_VALUE": "When you get an NFT, we will automatically assign you the appropriate role to enable your perks.",
-        "WALLET_FOUND_TITLE": "Your Wallet is Linked!",
-        "WALLET_FOUND_DESCRIPTION": "Your Discord is linked to the following wallet:",
-        "WALLET_FOUND_FIELD_NAME": "WARNING",
-        "WALLET_FOUND_FIELD_VALUE": "Never share your details with anyone but this bot. Our staff will never ask for your details here or via DM.\nFor any support questions, always use our support email: {support-email}",
-        "WALLET_NOT_FOUND_TITLE": "No Wallet Linked",
-        "WALLET_NOT_FOUND_DESCRIPTION": "We are unable to find any wallet linked with your Discord.",
-        "WALLET_NOT_FOUND_FIELD_NAME": "TROUBLESHOOTING",
-        "WALLET_NOT_FOUND_FIELD_VALUE": "(*) Make sure you are logged in to Discord with the right user/account.\n\n(*) Head to the verification channel and click the Get Started button to start linking your wallet and verify ownership of an NFT.\n\n(*) If you require assistance, please contact us to our {support-email} and we'll try to help.",
+
         "SUPPORT_EMAIL": "support@my-domain.gg",
         "NFT_MARKETPLACE": "https://my-nft-marketplace.gg"
     }

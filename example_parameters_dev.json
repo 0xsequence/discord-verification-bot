@@ -1,31 +1,10 @@
 
 {
     "Bot Token": {
-        "bot_token": "token"
-    },
-    "APP Client ID": {
-        "app_client_id": "00000000000000000"
+        "bot_token": "my_bot_token"
     },
     "Guild Id": {
         "guild_id": "00000000000000000"
-    },
-    "Wallet Verification channel ID": {
-        "verification_channel_id": "00000000000000000"
-    },
-    "Wallet verification channel name": {
-        "verification_channel_name": "verification-test"
-    },
-    "Wallet Connected role name": {
-        "wallet_connected_role_name": "Wallet Linked"
-    },
-    "Server support role name": {
-        "server_support_role_name": "God"
-    },
-    "Server support role ID": {
-        "server_support_role_id": "00000000000000000"
-    },
-    "Wallet Connected role ID": {
-        "wallet_connected_role_id": "00000000000000000"
     },
     "Webhook ID": {
         "webhook_id": "00000000000000000"
@@ -33,16 +12,25 @@
     "Webhook Token": {
         "webhook_token": "00000000000000000"
     },
-    "Marketplace": {
-        "marketplace": "https://1.123.456.233/"
-    },
-    "Verification Page Url" : {
-        "verification_page_url" : "https://the-verification-page.gg"
-    },
-    "JWT Token" : {
-        "jwt_secret" : "00000000000000000"
-    },
     "Wallet Verified Role Id" : {
         "wallet_verified_role_id" : "00000000000000000"
+    },
+    "NFT Roles Mapping": {
+        "nft_roles": "{\"NftRoles\":[{\"RoleId\":\"1111\",\"RoleName\":\"My Role Name 1\",\"NftSeries\":\"Test1\"},{\"RoleId\":\"2222\",\"RoleName\":\"My Role Name 2\",\"NftSeries\":\"Test2\"}]}"
+    },
+    "APP Client ID": {
+        "app_client_id": "00000000000000000"
+    },
+    "Bot DB Access Key": {
+        "access_key": "00000000000000000"
+    },
+    "Bot DB Secret Access Key": {
+        "secret_access_key": "00000000000000000"
+    },
+    "Verification channel ID": {
+        "verification_channel_id": "00000000000000000"
+    },
+    "Bot/Front-End JWT Secret" : {
+        "jwt_secret" : "00000000000000000"
     }
 }

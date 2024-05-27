@@ -1,18 +1,18 @@
-import {EmbedBuilder} from 'discord.js';
-import {EventBridgeEvent, Handler} from 'aws-lambda';
+import { EmbedBuilder } from 'discord.js';
+import { EventBridgeEvent, Handler } from 'aws-lambda';
 
-import {Detail} from './types/detail';
-import {Data} from './types/data';
-import {globalLogger as logger} from './types/global_logger';
-import {colors} from './types/color';
-import {botConfig} from './types/bot_config';
+import { Detail } from './types/detail';
+import { Data } from './types/data';
+import { globalLogger as logger } from './types/global_logger';
+import { botConfig } from './types/bot_config';
 
-import {DiscordService} from '@0xsequence/discord-utils';
-import {Nft, Wallet, WalletService} from '@0xsequence/wallet-utils';
+import { DiscordService } from '@0xsequence/discord-utils';
+import { Nft, Wallet, WalletService } from '@0xsequence/wallet-utils';
 
-import {setupDiscordService} from './setup/setup_discord_service';
-import {setupWalletService} from './setup/setup-wallet-service';
-import {isNullOrUndefined} from '@0xsequence/shared-utils';
+import { setupDiscordService } from './setup/setup_discord_service';
+import { setupWalletService } from './setup/setup-wallet-service';
+import { isNullOrUndefined } from '@0xsequence/shared-utils';
+import { colors } from './types/color';
 
 // TODO IMPROVEMENT: move these to a lambda layer
 const discordService: DiscordService = setupDiscordService();
@@ -62,12 +62,9 @@ async function handleNftMinted(mintedNft: Nft): Promise<void> {
         }
 
         const userId = saveNftToWalletResult?.UserId;
-        const ownedNftSeries = saveNftToWalletResult?.Nfts.map((nft) => nft.NftSeries);
-        const uniqueNftSeries = [...new Set(ownedNftSeries)];
+        const ownedNftSeries = walletService.getUniqueWalletNftsSeries(saveNftToWalletResult?.Nfts);
 
-        console.log('Unique NFTs owned Series: ', uniqueNftSeries);
-
-        await discordService.updateNftHolderRoles(userId!, uniqueNftSeries);
+        await discordService.updateNftHolderRoles(userId!, ownedNftSeries);
 
         const threadId = saveNftToWalletResult?.ThreadId;
         const embed: EmbedBuilder = getNewHolderEmbed();
@@ -92,7 +89,6 @@ async function handleNftTransferred(nftTransferredEventDetailData: Data): Promis
         }
 
         await removeNftFromPreviousHolder(fromWallet!, transferredNft);
-
         await transferNftToNewHolder(transferredNft);
     } catch (error) {
         logger.error(error);
@@ -135,11 +131,11 @@ async function handleDiscordVerifiedUser(nftTransferResult: Wallet, isPreviousHo
     logger.info('handleDiscordVerifiedUser - isPreviousHolder: ', isPreviousHolder);
 
     try {
-        // TODO @Taylan: this need to return whatever we call the NFT metadata property. Using Series for now.
-        const nftHolderHighestNftTier: string[] = ['Test2']; //walletService.getWalletHighestNftTier(nftTransferResult);
         const userId = nftTransferResult.UserId;
 
-        await discordService.updateNftHolderRoles(userId!, nftHolderHighestNftTier);
+        // TODO @Taylan: this need to return whatever we call the NFT metadata property. Using Series for now
+        const ownedNftSeries = walletService.getUniqueWalletNftsSeries(nftTransferResult.Nfts);
+        await discordService.updateNftHolderRoles(userId!, ownedNftSeries);
 
         const threadId = nftTransferResult.ThreadId;
         const embed = isPreviousHolder ? getPreviousHolderEmbed() : getNewHolderEmbed();
@@ -152,24 +148,24 @@ async function handleDiscordVerifiedUser(nftTransferResult: Wallet, isPreviousHo
     }
 }
 
-const titleDefault: string = 'NFT Ownership Updated';
-const field1DefaultName: string = 'IMPORTANT';
-const field1DefaultValue: string = `Your roles in this server might have been updated to reflect the changes in your NFT ownership`;
-const field2DefaultValue: string = `If you think there is an error, please contact us at ${botConfig.SUPPORT_EMAIL}`;
+const title: string = 'NFT Ownership Updated';
+const field1Name: string = 'IMPORTANT';
+const field1Value: string = `Your roles in this server might have been updated to reflect the changes in your NFT ownership`;
+const field2Value: string = `If you think there is an error, please contact us at ${botConfig.SUPPORT_EMAIL}`;
 
 function getPreviousHolderEmbed(): EmbedBuilder {
     return new EmbedBuilder()
-        .setTitle(botConfig.OWNERSHIP_UPDATED_TITLE ?? titleDefault)
-        .setDescription(botConfig.PREVIOUS_HOLDER_DESCRIPTION ?? 'We noticed you transferred an NFT!\n\n')
+        .setTitle(title)
+        .setDescription('We noticed you transferred an NFT!\n\n')
         .addFields(
             {
-                name: botConfig.FIELD1_NAME ?? field1DefaultName,
-                value: botConfig.FIELD1_VALUE ?? field1DefaultValue,
+                name: field1Name,
+                value: field1Value,
                 inline: true,
             },
             {
                 name: '\u200B',
-                value: botConfig.FIELD2_VALUE ?? field2DefaultValue,
+                value: field2Value,
                 inline: false,
             },
         )
@@ -178,23 +174,21 @@ function getPreviousHolderEmbed(): EmbedBuilder {
 }
 
 function getNewHolderEmbed(): EmbedBuilder {
-    return (
-        new EmbedBuilder()
-            .setTitle(botConfig.OWNERSHIP_UPDATED_TITLE ?? titleDefault)
-            .setDescription(botConfig.NEW_HOLDER_DESCRIPTION ?? 'Congratulations on obtaining an NFT!\n\n')
-            .addFields(
-                {
-                    name: botConfig.FIELD1_NAME ?? field1DefaultName,
-                    value: botConfig.FIELD1_VALUE ?? field1DefaultValue,
-                    inline: true,
-                },
-                {
-                    name: '\u200B',
-                    value: botConfig.FIELD2_VALUE ?? field2DefaultValue,
-                    inline: false,
-                },
-            )
-            //.setColor(colors.Green)
-            .setTimestamp()
-    );
+    return new EmbedBuilder()
+        .setTitle(title)
+        .setDescription('Congratulations on obtaining an NFT!\n\n')
+        .addFields(
+            {
+                name: field1Name,
+                value: field1Value,
+                inline: true,
+            },
+            {
+                name: '\u200B',
+                value: field2Value,
+                inline: false,
+            },
+        )
+        .setColor(colors.Blue)
+        .setTimestamp();
 }
