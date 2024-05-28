@@ -7,7 +7,9 @@ function setupWalletService(): WalletService {
         const localDbConfig: DbConfig = {
             TableName: botConfig.DB_TABLE_NAME,
             Region: botConfig.REGION,
-            Endpoint: 'http://bot-dynamodb-local:8000',
+            Endpoint: 'http://localhost:8000',
+            Key: botConfig.ACCESS_KEY,
+            SecretKey: botConfig.SECRET_ACCESS_KEY,
         };
 
         return new WalletService(localDbConfig, loggerConfig);

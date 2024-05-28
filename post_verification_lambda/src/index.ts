@@ -5,7 +5,7 @@ import { colors } from './types/color';
 import { globalLogger as logger } from './types/global_logger';
 
 import { setupDiscordService } from './setup/setup_discord_service';
-import { setupWalletService } from './setup/setup-wallet-service';
+import { setupWalletService } from './setup/setup_wallet_service';
 
 import { WalletService, WalletVerification } from '@0xsequence/wallet-utils';
 import { DiscordService } from '@0xsequence/discord-utils';

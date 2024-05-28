@@ -1,4 +1,4 @@
-import { NftRole } from './nft-role';
+import { NftRole } from './nft_role';
 
 export interface NftRoleMapping {
     NftRoles: NftRole[];

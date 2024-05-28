@@ -1,0 +1,41 @@
+{
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "WalletAddress",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "UserId",
+        "AttributeType": "S"
+      }
+    ],
+    "TableName": "verified_wallets",
+    "KeySchema": [
+      {
+        "AttributeName": "WalletAddress",
+        "KeyType": "HASH"
+      }
+    ],
+    "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "UserId-index",
+          "KeySchema": [
+            {
+              "AttributeName": "UserId",
+              "KeyType": "HASH"
+            }
+          ],
+          "Projection": {
+            "ProjectionType": "ALL"
+          },
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": 3,
+            "WriteCapacityUnits": 3
+          }
+        }
+    ],
+    "ProvisionedThroughput": {
+      "ReadCapacityUnits": 3,
+      "WriteCapacityUnits": 3
+    }
+}

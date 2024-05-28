@@ -10,7 +10,7 @@ import { DiscordService } from '@0xsequence/discord-utils';
 import { Nft, Wallet, WalletService } from '@0xsequence/wallet-utils';
 
 import { setupDiscordService } from './setup/setup_discord_service';
-import { setupWalletService } from './setup/setup-wallet-service';
+import { setupWalletService } from './setup/setup_wallet_service';
 import { isNullOrUndefined } from '@0xsequence/shared-utils';
 import { colors } from './types/color';
 

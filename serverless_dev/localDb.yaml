@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  bot-dynamodb-local:
+    command: "-jar DynamoDBLocal.jar -port 8000 -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: bot-dynamodb-local
+    networks:
+      - default
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./dynamo:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      DYNAMO_ENDPOINT: "http://bot-dynamodb-local:8000"
+    depends_on:
+      - bot-dynamodb-local
+
+networks:
+  default:
+    name: local_dev_network
