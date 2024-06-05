@@ -5,7 +5,7 @@ import {
     OptionalStringRule,
     RequiredStringRule,
     RequiredUrlRule,
-} from '@0xsequence/shared-utils';
+} from '@0xsequence/discord-bot-shared-utils';
 import {z} from 'zod';
 import {globalLogger} from "@/types/global_logger";
 

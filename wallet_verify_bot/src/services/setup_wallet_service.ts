@@ -1,6 +1,6 @@
 import { botConfig } from '../types/bot_config';
 import { loggerConfig } from '../types/global_logger';
-import { DbConfig, WalletService } from '@0xsequence/wallet-utils';
+import { DbConfig, WalletService } from '@0xsequence/discord-bot-wallet-utils';
 
 function setupWalletService(): WalletService {
     if (botConfig.NODE_ENV && botConfig.NODE_ENV === 'dev-local') {

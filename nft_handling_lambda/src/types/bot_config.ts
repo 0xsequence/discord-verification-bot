@@ -5,7 +5,7 @@ import {
     InfraConfigSchema,
     OptionalStringRule,
     RequiredStringRule,
-} from '@0xsequence/shared-utils';
+} from '@0xsequence/discord-bot-shared-utils';
 import { z } from 'zod';
 import { globalLogger } from './global_logger';
 

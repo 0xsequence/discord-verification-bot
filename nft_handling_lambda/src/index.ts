@@ -6,12 +6,12 @@ import { Data } from './types/data';
 import { globalLogger as logger } from './types/global_logger';
 import { botConfig } from './types/bot_config';
 
-import { DiscordService } from '@0xsequence/discord-utils';
-import { Nft, Wallet, WalletService } from '@0xsequence/wallet-utils';
+import { DiscordService } from '@0xsequence/discord-bot-server-utils';
+import { Nft, Wallet, WalletService } from '@0xsequence/discord-bot-wallet-utils';
 
 import { setupDiscordService } from './setup/setup_discord_service';
 import { setupWalletService } from './setup/setup_wallet_service';
-import { isNullOrUndefined } from '@0xsequence/shared-utils';
+import { isNullOrUndefined } from '@0xsequence/discord-bot-shared-utils';
 import { colors } from './types/color';
 
 // TODO IMPROVEMENT: move these to a lambda layer

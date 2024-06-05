@@ -1,12 +1,12 @@
-import { PublishCommand } from '@aws-sdk/client-sns';
-import { snsClient } from '@/clients/sns_client';
-import { SequenceConnectResult } from '@/interfaces/sequence-connect-result';
-import { WalletVerification } from '@0xsequence/wallet-utils';
+import {PublishCommand} from '@aws-sdk/client-sns';
+import {snsClient} from '@/clients/sns_client';
+import {SequenceConnectResult} from '@/interfaces/sequence-connect-result';
+import {WalletVerification} from '@0xsequence/discord-bot-wallet-utils';
 
-import { JsonWebTokenError, JwtPayload, verify } from 'jsonwebtoken';
-import { NextApiRequest, NextApiResponse } from 'next';
+import {JsonWebTokenError, JwtPayload, verify} from 'jsonwebtoken';
+import {NextApiRequest, NextApiResponse} from 'next';
 
-import { globalLogger as logger } from '@/types/global_logger';
+import {globalLogger as logger} from '@/types/global_logger';
 
 export default async function connect(req: NextApiRequest, res: NextApiResponse) {
     logger.info(`Attempting to connect wallet`);

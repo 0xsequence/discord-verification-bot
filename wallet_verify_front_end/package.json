@@ -7,11 +7,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@0xsequence/shared-utils": "1.0.0",
-    "@0xsequence/wallet-utils": "1.0.0",
+    "@0xsequence/discord-bot-shared-utils": "^1.0.2",
+    "@0xsequence/discord-bot-wallet-utils": "^1.0.0",
     "@aws-sdk/client-eventbridge": "3.329.0",
     "@aws-sdk/client-sns": "^3.352.0",
     "@types/jsonwebtoken": "^9.0.6",

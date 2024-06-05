@@ -1,6 +1,6 @@
 import { botConfig } from '../types/bot_config';
 import { loggerConfig } from '../types/global_logger';
-import { AccessConfig, DiscordConfig, DiscordService } from '@0xsequence/discord-utils';
+import { AccessConfig, DiscordConfig, DiscordService } from '@0xsequence/discord-bot-server-utils';
 
 export function setupDiscordService(): DiscordService {
     const accessConfig: AccessConfig = {

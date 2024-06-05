@@ -1,5 +1,5 @@
 import { botConfig } from '../types/bot_config';
-import { DbConfig, WalletService } from '@0xsequence/wallet-utils';
+import { DbConfig, WalletService } from '@0xsequence/discord-bot-wallet-utils';
 import { loggerConfig } from '../types/global_logger';
 
 function setupWalletService(): WalletService {

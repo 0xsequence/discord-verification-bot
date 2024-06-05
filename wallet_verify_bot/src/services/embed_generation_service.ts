@@ -2,7 +2,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, User } from
 import jwt from 'jsonwebtoken';
 import { colors } from '../types/colors';
 import { botConfig } from '../types/bot_config';
-import { Wallet } from '@0xsequence/wallet-utils';
+import { Wallet } from '@0xsequence/discord-bot-wallet-utils';
 
 export { EmbedGenerationService };
 

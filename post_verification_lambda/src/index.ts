@@ -7,8 +7,8 @@ import { globalLogger as logger } from './types/global_logger';
 import { setupDiscordService } from './setup/setup_discord_service';
 import { setupWalletService } from './setup/setup_wallet_service';
 
-import { WalletService, WalletVerification } from '@0xsequence/wallet-utils';
-import { DiscordService } from '@0xsequence/discord-utils';
+import { WalletService, WalletVerification } from '@0xsequence/discord-bot-wallet-utils';
+import { DiscordService } from '@0xsequence/discord-bot-server-utils';
 
 const discordService: DiscordService = setupDiscordService();
 const walletService: WalletService = setupWalletService();

@@ -1,4 +1,4 @@
-import { ColorConfig, hexStringToColor, initializeColors } from '@0xsequence/discord-utils';
+import { ColorConfig, hexStringToColor, initializeColors } from '@0xsequence/discord-bot-server-utils';
 import { botConfig } from './bot_config';
 
 const colors: ColorConfig = initializeColors({

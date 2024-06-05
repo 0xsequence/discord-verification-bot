@@ -1,4 +1,4 @@
-import { initializeLogger, LoggerConfig, SequenceLogger } from '@0xsequence/shared-utils';
+import { initializeLogger, LoggerConfig, SequenceLogger } from '@0xsequence/discord-bot-shared-utils';
 import dotenv from 'dotenv';
 
 dotenv.config();

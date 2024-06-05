@@ -10,9 +10,9 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@0xsequence/discord-utils": "1.0.0",
-    "@0xsequence/shared-utils": "1.0.0",
-    "@0xsequence/wallet-utils": "1.0.0",
+    "@0xsequence/discord-bot-server-utils": "^1.0.0",
+    "@0xsequence/discord-bot-shared-utils": "^1.0.2",
+    "@0xsequence/discord-bot-wallet-utils": "^1.0.0",
     "apis": "^0.1.2",
     "dotenv": "^16.0.3",
     "esbuild": "^0.20.2",

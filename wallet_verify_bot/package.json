@@ -8,12 +8,15 @@
   "scripts": {
     "start:dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node ."
+    "start": "node .",
+    "lint": "next lint",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "@0xsequence/discord-utils": "1.0.0",
-    "@0xsequence/shared-utils": "1.0.0",
-    "@0xsequence/wallet-utils": "1.0.0",
+    "@0xsequence/discord-bot-server-utils": "^1.0.0",
+    "@0xsequence/discord-bot-shared-utils": "^1.0.2",
+    "@0xsequence/discord-bot-wallet-utils": "^1.0.0",
     "@aws-sdk/client-dynamodb": "^3.351.0",
     "@discordjs/rest": "^1.7.1",
     "@types/jsonwebtoken": "^9.0.6",

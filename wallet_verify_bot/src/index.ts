@@ -97,21 +97,3 @@ async function sendPublicEmbedToVerificationChannel(currentChannel: TextChannel 
 
     logger.info('The verification channel already contains a message. Please delete it and re-start the bot if you need to post a new message!');
 }
-
-/*function getVerificationMessage(): EmbedBuilder {
-    const description =
-        'Are you a new NFT holder or do you need to manage your linked wallet?\n\nYou can link your wallet to Discord to verify ownership of an NFT and get your exclusive role and all the unique perks attached to it!';
-
-    return new EmbedBuilder()
-        .setTitle('Wallet Management & NFT Ownership Verification')
-        .setDescription(description)
-        .setFields([
-            {
-                name: 'IMPORTANT',
-                value: `Never share your wallet details with anyone but this bot. Our staff will never ask for your details here or via DM.\\nFor any support questions, always use ${botConfig.SUPPORT_EMAIL}\\n\\n`,
-                inline: true,
-            },
-        ])
-        .setColor(colors.Info)
-        .setImage(botConfig.PUBLIC_EMBED_IMAGE_URL);
-}*/

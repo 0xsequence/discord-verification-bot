@@ -1,4 +1,4 @@
-import { Nft } from '@0xsequence/wallet-utils';
+import { Nft } from '@0xsequence/discord-bot-wallet-utils';
 
 export class Data {
     public Nft: Nft;

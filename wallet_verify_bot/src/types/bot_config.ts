@@ -1,4 +1,4 @@
-import { BasicConfigSchema, ConfigurationError, DiscordStyleSchema, FrondEndSecuritySchema, InfraConfigSchema, RequiredStringRule, RequiredUrlRule } from '@0xsequence/shared-utils';
+import { BasicConfigSchema, ConfigurationError, DiscordStyleSchema, FrondEndSecuritySchema, InfraConfigSchema, RequiredStringRule, RequiredUrlRule } from '@0xsequence/discord-bot-shared-utils';
 import { globalLogger } from './global_logger';
 import { z } from 'zod';
 
