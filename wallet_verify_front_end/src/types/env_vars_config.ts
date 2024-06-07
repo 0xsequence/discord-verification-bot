@@ -23,7 +23,7 @@ const ownSchema = compositeSchema.extend({
     // Front-end Text
     NEXT_PUBLIC_INDEX_TITLE: RequiredUrlRule,
     NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_APP_NAME: RequiredStringRule,
-    NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_THEME: OptionalStringRule, // TODO IMPROVEMENT: enum
+    NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_THEME: OptionalStringRule,
     NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_BANNER_URL: RequiredUrlRule,
     NEXT_PUBLIC_CONNECT_WALLET_MAIN_MESSAGE: OptionalStringRule,
     NEXT_PUBLIC_DONE_ICON_URL: RequiredUrlRule,
@@ -40,9 +40,8 @@ if (!configParseResult.success) {
     );
 }
 
-// Make environment variables typed and available on the process.env
+// Make environment variables typed and available on the process.env.
 type OwnSchema = z.infer<typeof ownSchema>;
-
 declare global {
     // eslint-disable-next-line no-unused-vars
     namespace NodeJS {

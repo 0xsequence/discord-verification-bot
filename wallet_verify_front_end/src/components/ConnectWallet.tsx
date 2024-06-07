@@ -134,7 +134,6 @@ export default function ConnectWallet() {
                     <LoginButton handleOnClick={handleConnect} />
                 </div>
                 <div className="px-2 mt-0 h-24">{resultMessage && <Message message={resultMessage}/>}</div>
-                {/*<div className="px-2 mt-0 h-24">{resultMessage && <Message message={resultMessage} Summary={''} Detail={''} IsSuccess={false}/>}</div>*/}
             </main>
         </div>
     );
