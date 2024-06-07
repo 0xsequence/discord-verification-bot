@@ -15,7 +15,7 @@ import {globalLogger as logger} from '@/types/global_logger';
 
 export default function ConnectWallet() {
     const searchParams = useSearchParams();
-    const [resultMessage, setResultMessage] = useState<ResultMessage | undefined>();
+    const [resultMessage, setResultMessage] = useState<ResultMessage>();
     const [token, setToken] = useState<string | null>();
 
     useEffect(() => {
@@ -23,52 +23,68 @@ export default function ConnectWallet() {
         setToken(tokenValue);
     }, [searchParams]);
 
-    const setSuccessMessage = (message: string) => {
-        setResultMessage({
-            Summary: message ?? 'Finalising wallet verification! You can close this page now.',
-            Detail: 'You will receive a final confirmation in Discord. \nThis can take up to 5 minutes.',
-            IsSuccess: true,
+    const setSuccessMessage = (message: string | undefined) => {
+        setResultMessage((prevState) => {
+            const result: ResultMessage = {
+                ...prevState,
+                Summary: message ?? 'Finalising wallet verification! You can close this page now.',
+                Detail: 'You will receive a final confirmation in Discord. \nThis can take up to 5 minutes.',
+                IsSuccess: true,
+            };
+
+            return result as ResultMessage;
         });
     };
 
-    const setErrorMessage = (message: string) => {
-        setResultMessage({
-            Summary: 'The verification process failed.',
-            Detail: message ?? 'Please try again or contact support for help.',
-            IsSuccess: false,
+    const setErrorMessage = (message: string | undefined) => {
+        setResultMessage((prevState) => {
+            const result: ResultMessage = {
+                ...prevState,
+                Summary: message ?? 'Finalising wallet verification! You can close this page now.',
+                Detail: 'You will receive a final confirmation in Discord. \nThis can take up to 5 minutes.',
+                IsSuccess: false,
+            };
+
+            return result;
         });
     };
 
     const handleConnect = async (e: SyntheticEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setResultMessage(undefined); // TODO: FIX
+        setResultMessage(undefined);
+        
+        try {
+            const body = {
+                token: token,
+            };
+            const axiosResponse = await axios.post('/api/verify_token', body);
+            const tokenPayload =  axiosResponse.data.tokenPayload ?? null;
 
-        const sequenceConnectResult = await sequenceAuthenticate();
-        if (sequenceConnectResult == null) {
-            setErrorMessage('');
-            return;
-        }
+            const sequenceConnectResult = await sequenceAuthenticate();
+            if (sequenceConnectResult == null) {
+                setErrorMessage('Failed to connect your wallet, please try again');
+                return;
+            }
 
-        if (sequenceConnectResult.Address) {
-            // Call to connect.ts
-            try {
+            if (sequenceConnectResult.Address) {
+                // Call to connect.ts
                 const body = {
                     walletConnDetails: sequenceConnectResult,
-                    token: token,
+                    tokenPayload: tokenPayload,
                 };
                 const { data } = await axios.post('/api/connect', body);
                 setSuccessMessage(data.message);
-            } catch (error: unknown) {
-                if (axios.isAxiosError(error)) {
-                    logger.error(`Request failed - status code: ${error.response?.status} - ${error.response?.data}`);
-                    setErrorMessage(error?.response?.data.message);
-                } else {
-                    logger.error(error);
-                    setErrorMessage('There was an error connecting your wallet. Please try again');
-                }
+            }
 
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                logger.error(`Request failed - status code: ${error.response?.status} - ${error.response?.data}`);
+                setErrorMessage(error?.response?.data.message);
                 return;
             }
+            logger.error(error);
+            setErrorMessage('There was an error connecting your wallet. Please try again');
+            return;
         }
     };
 
@@ -117,7 +133,8 @@ export default function ConnectWallet() {
                 <div className="py-8 px-2">
                     <LoginButton handleOnClick={handleConnect} />
                 </div>
-                <div className="px-2 mt-0 h-24">{resultMessage && <Message message={resultMessage} />}</div>
+                <div className="px-2 mt-0 h-24">{resultMessage && <Message message={resultMessage}/>}</div>
+                {/*<div className="px-2 mt-0 h-24">{resultMessage && <Message message={resultMessage} Summary={''} Detail={''} IsSuccess={false}/>}</div>*/}
             </main>
         </div>
     );

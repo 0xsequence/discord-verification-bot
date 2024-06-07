@@ -4,6 +4,7 @@ REGION=aws-region
 ACCESS_KEY=12345678
 SECRET_ACCESS_KEY=123asDFhjk456x
 NETWORK: mumbai(test)|mainnet(release)
+NEXT_PUBLIC_LOG_LEVEL: debug | info
 NEXT_PUBLIC_BUCKET_NAME: my-prod-bucket | my-dev-bucket
 NEXT_PUBLIC_INDEX_TITLE: 'DiscordServer - Wallet Verification'
 NEXT_PUBLIC_CONNECT_WALLET_SEQUENCE_APP_NAME: 'Discord Server's Wallet Verification

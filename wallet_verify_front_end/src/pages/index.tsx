@@ -14,7 +14,6 @@ export default function Home() {
 
     useEffect(() => {
         const tokenValue = searchParams.get('token');
-        // TODO IMPROVEMENT: ADD TOKEN VERIFICATION
         setError(!tokenValue);
     }, [searchParams]);
 
