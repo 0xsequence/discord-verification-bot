@@ -1,0 +1,22 @@
+{
+    "Records": [
+        {
+            "EventSource": "aws:sns",
+            "EventVersion": "1.0",
+            "EventSubscriptionArn": "arn:aws:sns:eu-central-1:11111:wallet_verified:1234-4fg5-6cc7-asd1-11111..",
+            "Sns": {
+                "Type": "Notification",
+                "MessageId": "71294232-a89e-53a4-a623-1f34d28b46d7",
+                "TopicArn": "arn:aws:sns:eu-central-1:11111:wallet_verified",
+                "Subject": null,
+                "Message": "{\"UserId\":\"11111111111\",\"ThreadId\":\"2222222222\",\"UserName\":\"DiscordUserName\",\"Email\":\"whatever@testemail.gg\",\"WalletAddress\":\"0x12345...\",\"Signature\":\"eth.0x12345.ey....\"}",
+                "Timestamp": "2023-06-16T14:55:17.517Z",
+                "SignatureVersion": "1",
+                "Signature": "jsdfhgsdhjgfhjsgdf+asdasdasadsad+asdasdass/dfghgdffdhgfhj/ghjkdfghj+dhfghsdfgdh/TQ==",
+                "SigningCertUrl": "https://sns.eu-central-1.amazonaws.com/SimpleNotificationService-1111111111.pem",
+                "UnsubscribeUrl": "https://sns.eu-central-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-central-1:11111111:wallet_verified:fjsdgfhjsdg5676767",
+                "MessageAttributes": {}
+            }
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "version": "0",
+    "id": "111-222-333",
+    "detail-type": "NftMinted",
+    "source": "0xsequence.blockchain",
+    "account": "111111111",
+    "region": "my-region",
+    "detail": {
+        "Data": {
+            "Nft": {
+                "NftSeries": "Test1 | Test2",
+                "NftId": 1,
+                "Wallet": "0x_owner_wallet_address...",
+                "Version": 1
+            }
+        },
+        "Metadata": {
+            "EventId": "db4eb6f2-6f26-460f-8ca5-afd7b43b39d9",
+            "CorrelationId": "e1540881-40ac-42be-82ff-f673ceb9d8db",
+            "Timestamp": "2023-07-19T11:20:38.261Z"
+        }
+    }
+}

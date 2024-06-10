@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Gives user a role and sends a message to the user's private thread to confirm they verified their wallet
+
+Parameters:
+  Environment:
+    Type: String
+  SNSTopicArn:
+    Type: String
+  DbTableName:
+    Type: String
+  NftMarketplace:
+    Type: String
+  SupportEmail:
+    Type: String
+  Blue:
+    Type: String
+  Red:
+    Type: String
+  Green:
+    Type: String
+  Yellow:
+    Type: String
+
+Resources:
+  PostVerificationLambda:
+    Type: 'AWS::Serverless::Function'
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/index.ts
+    Properties:
+      CodeUri: ./
+      Handler: src/index.handler
+      FunctionName: post-verification-lambda
+      Runtime: nodejs18.x
+      Timeout: 30
+      MemorySize: 256
+      Events:
+        SNSEvent:
+          Type: SNS
+          Properties:
+            Topic: !Ref SNSTopicArn
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonSSMReadOnlyAccess
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:*
+              Resource: '*'
+      Environment:
+        Variables:
+          BOT_TOKEN: '{{resolve:ssm:bot_token}}'
+          GUILD_ID: '{{resolve:ssm:guild_id}}'
+          WEBHOOK_ID: '{{resolve:ssm:webhook_id}}'
+          WEBHOOK_TOKEN: '{{resolve:ssm:webhook_token}}'
+          WALLET_VERIFIED_ROLE_ID: '{{resolve:ssm:wallet_verified_role_id}}'
+          NFT_ROLES: '{{resolve:ssm:nft_roles}}'
+          REGION: !Ref AWS::Region
+          DB_TABLE_NAME: !Ref DbTableName
+          NFT_MARKETPLACE: !Ref NftMarketplace
+          SUPPORT_EMAIL: !Ref SupportEmail
+          BLUE_COLOR: !Ref Blue
+          RED_COLOR: !Ref Red
+          GREEN_COLOR: !Ref Green
+          YELLOW_COLOR: !Ref Yellow
+
+          # Leave these empty - Need to exist here or will be undefined on local invoke
+          NODE_ENV: ""
+          LOG_LEVEL: ""
+
+
+

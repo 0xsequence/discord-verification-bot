@@ -1,0 +1,39 @@
+{
+  "name": "post-verification-lambda",
+  "description": "Lambda triggered by the wallet verification page. Saves verified user information and communicate with the user & set roles in Discord",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@0xsequence/discord-bot-server-utils": "^1.0.0",
+    "@0xsequence/discord-bot-shared-utils": "^1.0.2",
+    "@0xsequence/discord-bot-wallet-utils": "^1.0.0",
+    "apis": "^0.1.2",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.20.2",
+    "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "@discordjs/rest": "^1.7.0",
+    "@types/aws-lambda": "^8.10.92",
+    "@types/node": "^20.12.2",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.3"
+  },
+  "optionalDependencies": {
+    "fsevents": "~2.3.2"
+  }
+}

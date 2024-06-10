@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  nft_handling_lambda
+
+Parameters:
+  Environment:
+    Type: String
+  DbTableName:
+    Type: String
+  NftMarketplace:
+    Type: String
+  SupportEmail:
+    Type: String
+  Blue:
+    Type: String
+  Red:
+    Type: String
+  Green:
+    Type: String
+  Yellow:
+    Type: String
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+# Resources declares the AWS resources that you want to include in the stack
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
+Resources:
+  NftHandlingLambda:
+    Type: AWS::Serverless::Function
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2022"
+        Sourcemap: true
+        EntryPoints:
+          - src/index.ts
+    Properties:
+      CodeUri: ./
+      Handler: src/index.handler
+      FunctionName: nft-handling-lambda
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      Timeout: 30
+      MemorySize: 256
+      Events:
+        EBRule:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: incoming
+            Pattern:
+              source:
+                - 0xsequence.blockchain
+              detail-type:
+                - NftMinted
+                - NftTransferred
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonSSMReadOnlyAccess
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:*
+              Resource: 'arn:aws:dynamodb:*:*:table/verified_wallets'
+      Environment:
+        Variables:
+          BOT_TOKEN: "{{resolve:ssm:bot_token}}"
+          GUILD_ID: "{{resolve:ssm:guild_id}}"
+          WEBHOOK_ID: "{{resolve:ssm:webhook_id}}"
+          WEBHOOK_TOKEN: "{{resolve:ssm:webhook_token}}"
+          WALLET_VERIFIED_ROLE_ID: '{{resolve:ssm:wallet_verified_role_id}}'
+          NFT_ROLES: '{{resolve:ssm:nft_roles}}'
+          REGION: !Ref AWS::Region
+          DB_TABLE_NAME: !Ref DbTableName
+          NFT_MARKETPLACE: !Ref NftMarketplace
+          SUPPORT_EMAIL: !Ref SupportEmail
+          BLUE_COLOR: !Ref Blue
+          RED_COLOR: !Ref Red
+          GREEN_COLOR: !Ref Green
+          YELLOW_COLOR: !Ref Yellow
+
+          # Leave these empty - Need to exist here or will be undefined on local invoke
+          NODE_ENV: ""
+          LOG_LEVEL: ""

@@ -1,0 +1,59 @@
+{
+  "name": "wallet-verify-front-end",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@0xsequence/discord-bot-shared-utils": "^1.0.2",
+    "@0xsequence/discord-bot-wallet-utils": "^1.0.0",
+    "@aws-sdk/client-eventbridge": "3.329.0",
+    "@aws-sdk/client-sns": "^3.352.0",
+    "@types/jsonwebtoken": "^9.0.6",
+    "0xsequence": "^0.43.27",
+    "aws-sdk": "^2.1374.0",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "next": "14.2.2",
+    "pino": "^9.0.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "web3": "^1.10.0"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^14.2.3",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.8.0",
+    "eslint-config-next": "14.2.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "pino-pretty": "^11.0.0",
+    "postcss": "^8",
+    "prettier": "^2.5.1",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "fsevents": "~2.3.2"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  }
+}

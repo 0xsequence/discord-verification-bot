@@ -1,0 +1,2 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+#* text eol=crlf - this is messing up with pulls in dev when DevOps changes the eols in Linux

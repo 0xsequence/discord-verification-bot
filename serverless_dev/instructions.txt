@@ -1,0 +1,51 @@
+
+PRE-REQUISITES
+
+1 - We don't use env. files anymore for the lambdas
+    Make sure all env. variables (for LAMBDAS only) are set in a local_env_vars.json file in the root (Esh.WalletVerification.Bot)
+
+2 - MAKE SURE that NODE_ENV = dev-local is set in your json file (see example_local_env_vars.json) and is empty in each lambda's template.yaml
+
+3 - Also, it needs to be set in the bot's .env file, as the bot is accessing the db for wallet_check
+
+
+INSTRUCTIONS
+
+1 - Run the db container
+
+2 - Create the table with the GSI = run the following command in ESH.WalletVerification.Bot\serverless_dev>:
+    aws dynamodb create-table --cli-input-json file://verified_wallet_schema.json --endpoint-url http://localhost:8000 --region eu-central-1
+    WARNING: Remember the --endpoint-url parameter or a real table will be created in whatever region your local AWS CLI defaults to.
+
+3 - To see the table/add-remove items: http://localhost:8001/tables/verified_wallets
+
+4 - To add items, use the model in item.json at: http://localhost:8001/tables/verified_wallets/add-item
+
+5 - To run lambdas, need to add docker-network and local env.vars:
+    sam local invoke PostVerificationLambda --env-vars ../local_env_vars.json --docker-network local_dev_network -e events/wallet_verified_SNS.json
+
+This will ensure that the lambda is running in the same network as the db, and that the template.yaml environment variables
+are set using the values from the local_env_vars.json file instead of the ssm params store
+
+
+TROUBLESHOOTING
+
+1 - log out from the ide for aws, might try to use the ~/.aws_creds
+2 - rebuild the Docker images (db and lambdas) to make sure they have the latest configurations & are running in the same network.
+3 - check the network is running (docker network ls)
+4 - test db connectivity using curl (curl http://bot-dynamodb-local:8000)
+5 - check if the DynamoDB local container is running (docker ps) and check that the "bot-dynamodb-local" container is healthy
+6 - check that all env variables in the json file have a matching variable in each lambda template.yaml file
+7 - a probable cause of an undefined env. variable even when is set in the local_env_vars json file, is that the variable is not defined in template.yaml.
+    all variables need to be defined in template.yaml even if they are used only to run the lambdas locally. Can be left empty if not needed for deployments
+8 - If wallet_verify_bot fails when trying to access the db, try `curl http://bot-dynamodb-local:8001`
+    If this fails with this kind of error:
+       curl : The remote name could not be resolved: 'bot-dynamodb-local'
+       At line:1 char:1
+       + curl http://bot-dynamodb-local:8001
+
+    Make sure you have the right database endpoint for the bot: 'http://localhost:8000' and has credential set to the dbClient
+
+
+
+

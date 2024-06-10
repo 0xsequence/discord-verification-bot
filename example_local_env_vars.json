@@ -1,0 +1,23 @@
+{
+    "Parameters": {
+        "BOT_TOKEN": "AsdFghI.1234asfd",
+        "GUILD_ID": 11111111111111,
+        "WEBHOOK_ID": 22222222222222222,
+        "WEBHOOK_TOKEN": "asdfg123-_asdfg123-asd-fghj",
+        "WALLET_VERIFIED_ROLE_ID": 55555555555555555555,
+        "NFT_ROLES": " {\"NftRoles\":[{\"RoleId\":\"55555555555\",\"RoleName\":\"My Role Name 1\",\"NftSeries\":\"Test1\"},{\"RoleId\":\"6666666666666\",\"RoleName\":\"My Role Name 2\",\"NftSeries\":\"Test2\"}]}",
+
+        "REGION": "eu-central-1",
+        "NODE_ENV": "dev-local",
+        "DB_TABLE_NAME": "verified_wallets",
+        "LOG_LEVEL": "debug",
+
+        "BLUE_COLOR": "0x00b0f4",
+        "RED_COLOR": "0xff0000",
+        "GREEN_COLOR": "0x00ff00",
+        "YELLOW_COLOR": "0xffaa00",
+
+        "SUPPORT_EMAIL": "support@my-domain.gg",
+        "NFT_MARKETPLACE": "https://my-nft-marketplace.gg"
+    }
+}

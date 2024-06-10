@@ -1,0 +1,25 @@
+BOT_TOKEN=AaSsdfgHH.Jkl1_A.2aSdFGhjKLQ
+GUILD_ID=123456789
+WALLET_VERIFIED_ROLE_ID=787878787878
+APP_CLIENT_ID=12345678
+REGION=eu-central-2
+NODE_ENV=dev-local | leave_empty_for_deployment!
+DB_TABLE_NAME= verified_wallets
+LOG_LEVEL=debug | info
+BLUE_COLOR="#00b0f4"
+RED_COLOR="#ff00002"
+GREEN_COLOR="#00ff00"
+YELLOW_COLOR="#ffaa00"
+SUPPORT_EMAIL="support@mydomain.com"
+
+APP_CLIENT_ID=1111111111
+ACCESS_KEY=dummy
+SECRET_ACCESS_KEY=dummy
+VERIFICATION_CHANNEL_ID=222222222
+JWT_SECRET=whatever_we_like_that_matches_front_end_JWT_SECRET
+ISSUER=App_or_Server_Name
+NFT_MARKETPLACE="https://my-nft-marketplace.gg"
+VERIFICATION_PAGE_URL=http://localhost:3000/
+
+PUBLIC_EMBED_IMAGE_URL=https://my-domain/Splashart.png
+BUCKET_NAME= test
