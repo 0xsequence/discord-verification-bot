@@ -6,13 +6,11 @@ node_modules/
 pnp
 .pnp.js
 
-# TODO: remove after refactor
+# TODO: remove after refactor/deployment setup
 .github
-docs
 dist
 amplify
 overview*
-README*
 .run/*
 deploy*
 */pnpm*

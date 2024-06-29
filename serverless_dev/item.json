@@ -1,9 +1,9 @@
 {
-    "WalletAddress": "0xtest_1",
-    "UserId" : "123",
+    "WalletAddress": "0xtest_123456789123456789",
+    "UserId" : "1111111111111",
     "Nfts": [],
-    "ThreadId" : "",
-    "Username": "test_username",
-    "Email": "test1@somedomain.co.uk",
-    "Signature": "test_signature"
+    "ThreadId" : "22222222222222222",
+    "Username": "TestUserGG",
+    "Email": "test@somedomain.gg",
+    "Signature": "eth.0x123456789.ey..."
   }
