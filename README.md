@@ -1,10 +1,7 @@
 <a id="readme-top"></a>
 
-[![Licence][license-shield]][license-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![Issues](https://img.shields.io/github/issues/0xsequence/discord-verification-bot)
 
 <br />
 <div align="center">
