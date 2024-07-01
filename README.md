@@ -1,9 +1,7 @@
 <a id="readme-top"></a>
 
-[![Licence][license-shield]][license-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+[![Licence][license-shield]][https://github.com/0xsequence/discord-verification-bot/blob/master/LICENSE.txt]
+[![Issues][issues-shield]][https://github.com/0xsequence/discord-verification-bot/issues]
 
 
 <br />
