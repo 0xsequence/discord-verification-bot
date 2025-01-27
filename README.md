@@ -1,15 +1,12 @@
 <a id="readme-top"></a>
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![Issues](https://img.shields.io/github/issues/0xsequence/discord-verification-bot)
-
 <br />
 <div align="center">
   <a href="https://github.com/0xsequence/discord-verification-bot">
     <img alt="sequence_logo" src="https://avatars.githubusercontent.com/u/35579638" width="120" height="120">
   </a>
 
-<h1 align="center">Wallet Verification Bot</h1>
+<h1 align="center">Sequence Wallet Discord Verification Bot</h1>
   <p align="center">
     A Discord Bot for assigning your own server roles to users who link their wallets and verify their NFT ownership.
     <br />
