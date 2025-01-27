@@ -10,10 +10,7 @@
   <p align="center">
     A Discord Bot for assigning your own server roles to users who link their wallets and verify their NFT ownership.
     <br />
-    <a href="https://docs.sequence.xyz/guides/wallet-verification-guide/"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://discord.gg/{TBD}">View Demo</a>
     ·
     <a href="https://github.com/0xsequence/discord-verification-bot/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
